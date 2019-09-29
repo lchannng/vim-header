@@ -94,7 +94,7 @@ fun s:set_props()
 
         let b:block_comment = 1
         let b:comment_char = ' *'
-        let b:comment_begin = '/**'
+        let b:comment_begin = '/*'
         let b:comment_end = ' */'
     " ----------------------------------
     elseif b:filetype == 'haskell'
@@ -161,7 +161,7 @@ fun s:set_props()
         let b:comment_char = "!!"
     " ----------------------------------
     elseif b:filetype == "ocaml"
-        let b:comment_begin = "(**"
+        let b:comment_begin = "(*"
         let b:comment_end = "*)"
         let b:comment_char = "*"
         let b:block_comment = 1
@@ -285,9 +285,9 @@ fun s:add_header()
     endif
     if g:header_field_filename
         if g:header_field_filename_path
-            call append(i, b:comment_char . b:field_file . ' ' . expand('%s:t'))
+            call append(i, b:comment_char . b:field_file . ' ' . expand('%p:t'))
         else
-            call append(i, b:comment_char . b:field_file . ' ' . split(expand('%s:t'),'/')[-1])
+            call append(i, b:comment_char . b:field_file . ' ' . expand('%:t'))
         endif
         let i += 1
     endif
@@ -370,9 +370,9 @@ fun s:update_header()
     " Update file name
     if g:header_field_filename
         if g:header_field_filename_path
-            call s:update_header_field_and_value(b:field_file, expand('%s:t'))
+            call s:update_header_field_and_value(b:field_file, expand('%p:t'))
         else
-            call s:update_header_field_and_value(b:field_file, split(expand('%s:t'),'/')[-1])
+            call s:update_header_field_and_value(b:field_file, expand('%:t'))
         endif
     endif
     "" Update field license id
@@ -439,9 +439,9 @@ fun s:add_min_header()
     " Fill user's information
     if g:header_field_filename
         if g:header_field_filename_path
-            let header_line .= ' ' . expand('%s:t')
+            let header_line .= ' ' . expand('%p:t')
         else
-            let header_line .= ' ' . split(expand('%s:t'),'/')[-1]
+            let header_line .= ' ' . expand('%:t')
         endif
     endif
     if g:header_field_author != ''
